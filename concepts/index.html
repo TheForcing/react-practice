@@ -11,12 +11,10 @@
     <div>
         <button id="vjs-button">Click Me(VJS)</button>
     </div>
-
     <!-- 1. 컴포넌트를 탑재할 영역 -->
     <h1>React</h1>
     <div id="root"></div>
 </body>
-
 <script>
     window.addEventListener("load", () => {
         // #vjs-button 검색
@@ -32,4 +30,8 @@
 
 <!-- 3. Babel 번역기를 페이지에 포함 -->
 <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+<!-- 4. Component 로드 -->
+<script type="text/babel" src="./js/components/Welcome.jsx"></script>
 <script type="text/babel" src="./js/index.js"></script>
+</html> 
