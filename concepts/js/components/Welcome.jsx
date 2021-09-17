@@ -16,6 +16,7 @@ class Welcome extends React.Component{
     }
     // LifeCycle
     //Mount 단계 : rendering 직전
+   /*
     componentWillMount(){
         console.log("LifeCycle: componentMount Calls" );
     }
@@ -24,6 +25,24 @@ class Welcome extends React.Component{
     componentDidMount(){
         console.log("LifeCycle: componentMount Calls" );
     }
+    */
+   //New Mounting 라이프 사이클: construtor -> getEerivedStateFromProps
+   //-> render->componentdidMount
+   static getDerivedStateFromProps(nextProps, prevState){
+       //prop에 받아온 값을 state에 넣어주고 싶을 때 호출
+       console.log("New LifeCycle: getDerivedStateFromProps calls");
+       console.log(nextProps, prevState);
+
+       if ( nextProps.color !== prevState.color &&
+           nextProps.color !== undefined){
+               //새로운 Props을 state에 반영
+               console.log("color state에 반영");
+           return { color: nextProps.color}; //변경되 state리턴
+
+        }
+        //변경 사항이 없을떄
+        return null;
+   }
     componentWillUnmount(){
         console.log("LifeCycle: componentWillUnmount Calls" );
     }
@@ -33,6 +52,7 @@ class Welcome extends React.Component{
     
     //Old updating 라이프 사이클:
     // componentWillRecieveProps -> componentWillupdate->componentDidUpdate
+    /*
     componentWillReceiveProps(){
         console.log("LifeCycle: componentWillReceiveProps call");
     }
@@ -42,7 +62,38 @@ class Welcome extends React.Component{
     componentDidUpdate(){
         console.log("LifeCycle: componentDidUpdate call")
     }
-    
+    */
+
+    // New Updating 라이프 싸이클
+    // getDerivedStateFromProps-> shouldComponentUpdate->render->
+    // getSnapshotBeforeUpdate -> componentDidupdate
+    shouldComponentUpdate(nextProps, nextState){
+        //컴포넌트를 다시 랜더링 해야 할지 결정하는 단계
+        console.log("New LifeCycle: shouldComponentUpdate calls");
+        console.log(nextProps);
+        console.log(nextState);
+        return false; //리턴 값이 true면 다시 랜더링 
+    }
+    getSnapshotBeforeUpdate(prevProps, prevState){
+        //컴포넌트 변화가 일어나기 직전의 DOM 상태를 가져와서 특정 값을 반환
+        // -> dlrkqtmds componentUpdate에서 받아올 수 있다<
+        console.log("NewLifeCycle: getSnapshotBeforeUpdate calls");
+        console.log(prevProps);
+        console.log(prevState);
+        
+        return null; // 반환된 값은 componentdidUpdate에서 받아올수있다.
+    }
+    componentDidUpdate(prevProps, prevState){
+        // snapshot: getSnapshotBeforeUpdate에서 리턴한 값
+         console.log("NewLifeCycle: componentDidupdadte calls");
+         if(snapshot){
+             console.log("업데이트 되기 전 snapshot:", snapshot);
+         }
+         console.log(prevProps);
+         console.log(prevState);
+
+    }
+
     render() {
         //JSX를 리턴
         console.log("render props:", this.props)
